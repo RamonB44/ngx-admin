@@ -16,7 +16,7 @@
 
 - Angular updated to version 10.
 - Nebular updated to version 6.
-
+                                                                                                 
 
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/akveo/ngx-admin/compare/v4.0.1...v5.0.0) (2020-04-01)
@@ -34,7 +34,7 @@
 * **seo:** add canonical tag ([#5578](https://github.com/akveo/ngx-admin/issues/5578)) ([76d31da](https://github.com/akveo/ngx-admin/commit/76d31da))
 * add calendar with week numbers example ([#5515](https://github.com/akveo/ngx-admin/issues/5515)) ([3242257](https://github.com/akveo/ngx-admin/commit/3242257))
 
-
+                             
 ### BREAKING CHANGES
 
 - Angular updated to version 9.

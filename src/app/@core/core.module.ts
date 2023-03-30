@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordStrategyToken } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -45,9 +45,30 @@ export const NB_CORE_PROVIDERS = [
   ...NbAuthModule.forRoot({
 
     strategies: [
-      NbDummyAuthStrategy.setup({
+      NbPasswordAuthStrategy.setup({
         name: 'email',
-        delay: 3000,
+        baseEndpoint: 'http://localhost:3000',
+        token: {
+          class: NbAuthJWTToken,
+          key: 'expressjs-cookie-session',
+          // getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
+          //   res.body,
+          //   options.token.key,
+          // ),
+          getter: (module,res, options) => {
+            console.log(res.headers)
+            // console.log(module),
+            // console.log(options)
+          }
+        },
+        login: {
+          // ...
+          endpoint: '/api/auth/login',
+        },
+        register: {
+          // ...
+          endpoint: '/api/auth/register',
+        },
       }),
     ],
     forms: {
@@ -90,6 +111,7 @@ export const NB_CORE_PROVIDERS = [
   ],
   declarations: [],
 })
+
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');

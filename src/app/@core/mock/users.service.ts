@@ -15,11 +15,13 @@ export class UserService extends UserData {
     alan: { name: 'Alan Thompson', picture: 'assets/images/alan.png' },
     kate: { name: 'Kate Martinez', picture: 'assets/images/kate.png' },
   };
+
   private types = {
     mobile: 'mobile',
     home: 'home',
     work: 'work',
   };
+
   private contacts: Contacts[] = [
     { user: this.users.nick, type: this.types.mobile },
     { user: this.users.eva, type: this.types.home },
@@ -28,6 +30,7 @@ export class UserService extends UserData {
     { user: this.users.alan, type: this.types.home },
     { user: this.users.kate, type: this.types.work },
   ];
+
   private recentUsers: RecentUsers[]  = [
     { user: this.users.alan, type: this.types.home, time: this.time.setHours(21, 12)},
     { user: this.users.eva, type: this.types.home, time: this.time.setHours(17, 45)},

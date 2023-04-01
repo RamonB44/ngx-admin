@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordStrategyToken } from '@nebular/auth';
+import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbAuthJWTInterceptor } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -39,6 +39,10 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
   }
 }
 
+export class NbAuthJWTIctor extends NbAuthJWTInterceptor {
+  // investigar sobre la clase NbAuthJWTInterceptor
+}
+
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
@@ -50,26 +54,30 @@ export const NB_CORE_PROVIDERS = [
         baseEndpoint: 'http://localhost:3000',
         token: {
           class: NbAuthJWTToken,
-          key: 'expressjs-cookie-session',
+          key: 'token',
           // getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
           //   res.body,
           //   options.token.key,
           // ),
-          getter: (module,res, options) => {
-            console.log(res.headers)
-            // console.log(module),
-            // console.log(options)
-          }
         },
         login: {
           // ...
           endpoint: '/api/auth/login',
+          redirect: {
+            success: '/pages/dashboard',
+            failure: null, // stay on the same page
+          },
         },
         register: {
           // ...
           endpoint: '/api/auth/register',
+          redirect: {
+            success: '/pages/dashboard',
+            failure: null, // stay on the same page
+          },
         },
       }),
+
     ],
     forms: {
       login: {
@@ -84,11 +92,13 @@ export const NB_CORE_PROVIDERS = [
   NbSecurityModule.forRoot({
     accessControl: {
       guest: {
-        view: '*',
+        view: ['*'],
       },
       user: {
-        parent: 'guest',
         create: '*',
+      },
+      admin: {
+        parent: 'user',
         edit: '*',
         remove: '*',
       },
@@ -99,7 +109,7 @@ export const NB_CORE_PROVIDERS = [
     provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
   },
   AnalyticsService,
-  SeoService,
+  SeoService
 ];
 
 @NgModule({

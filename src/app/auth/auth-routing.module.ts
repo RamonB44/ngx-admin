@@ -34,7 +34,7 @@ export const routes: Routes = [
         component: NgxResetPasswordComponent, // <---
       },
     ],
-  }
+  },
 ];
 
 @NgModule({

@@ -12,6 +12,8 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './@core/services/auth-guard.service';
+import { WebSocketIO } from "./@core/services/websocket.service"
+
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -42,7 +44,7 @@ import {
     ThemeModule.forRoot(),
   ],
   bootstrap: [AppComponent],
-  providers: [AuthGuard]
+  providers: [AuthGuard, WebSocketIO,],
 })
 export class AppModule {
 }

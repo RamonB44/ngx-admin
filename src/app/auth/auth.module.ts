@@ -14,9 +14,8 @@ import {
   NbAlertModule,
   NbButtonModule,
   NbCheckboxModule,
-  NbInputModule
+  NbInputModule,
 } from '@nebular/theme';
-
 
 @NgModule({
   imports: [
@@ -37,7 +36,7 @@ import {
     NgxLogoutComponent,
     NgxRegisterComponent,
     NgxRequestPasswordComponent,
-    NgxResetPasswordComponent
+    NgxResetPasswordComponent,
   ],
 })
 export class NgxAuthModule {

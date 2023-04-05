@@ -1,0 +1,50 @@
+import { Injectable } from '@angular/core';
+import { io, Socket } from 'socket.io-client';
+import { Observable } from 'rxjs';
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+
+@Injectable()
+export class WebSocketIO {
+  private socket: Socket;
+  private token: string;
+
+
+  constructor(private authService: NbAuthService) {
+    this.authService.onTokenChange()
+        .subscribe((token: NbAuthJWTToken) => {
+
+          if (token.isValid()) {
+            this.token = token.getValue(); // here we receive a payload from the token and assigns it to our `user` variable
+          }
+
+        });
+
+    this.socket = io("http://localhost:3001", {
+      reconnection: true,
+      transports: ["websocket", "polling"],
+      withCredentials: true,
+      extraHeaders: {
+        'Access-Control-Allow-Origin': 'http://localhost:4200',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
+        // add any other headers you need to sendS
+      },
+      auth: {
+        token: this.token,
+      },
+    });
+  }
+  // emite un mensaje al evento
+  sendMessage(event: string, msg: string) {
+    this.socket.emit(event, { message: msg });
+  }
+  // captura el mensaje de un evento
+  onHandleMessage(event: string) {
+    return new Observable(observer => {
+      this.socket.on(event, msg => {
+        observer.next(msg);
+      });
+    });
+  }
+
+}

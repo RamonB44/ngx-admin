@@ -1,7 +1,7 @@
-  import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
-import { NbAuthJWTToken, NbAuthService, NbAuthResult , NbAuthRefreshableToken} from '@nebular/auth';
+import { NbAuthJWTToken, NbAuthService, NbAuthResult, NbAuthRefreshableToken } from '@nebular/auth';
 
 @Injectable()
 export class WebSocketIO {
@@ -11,23 +11,23 @@ export class WebSocketIO {
 
   constructor(private authService: NbAuthService) {
     this.authService.onTokenChange()
-        .subscribe((token: NbAuthJWTToken) => {
+      .subscribe((token: NbAuthJWTToken) => {
 
-          if (token.isValid()) {
-            this.token = token.getValue();
+        if (token.isValid()) {
+          this.token = token.getValue();
 
-          }
+        }
 
-        });
+      });
 
-    this.socket = io("http://localhost:3001", {
+    this.socket = io('http://localhost:3001', {
       // reconnectionAttempts : 5,
       reconnectionDelay: 20000,
       // reconnectionDelayMax: 5000,
       // timeout: 5000,
       // timeout: 20000,
       reconnection: true,
-      transports: ["websocket", "polling"],
+      transports: ['websocket', 'polling'],
       withCredentials: true,
       extraHeaders: {
         'Access-Control-Allow-Origin': 'http://localhost:4200',
@@ -41,13 +41,11 @@ export class WebSocketIO {
 
     });
 
-    this.socket.on("connect_error", () => {
-      // console.log(this.token);
-      this.authService.refreshToken("email",{ token : this.token }).toPromise().then(( NbAuthResult: NbAuthResult ) => {
-        this.socket.auth.token = NbAuthResult.getToken().toString();
-        return NbAuthResult.getToken();
+    this.socket.on('connect_error', () => {
+      this.authService.refreshToken('email', { token: this.token }).toPromise().then((result: NbAuthResult) => {
+        this.socket.auth.token = result.getToken().toString();
+        return result.getToken();
       });
-
     });
   }
   // emite un mensaje al evento

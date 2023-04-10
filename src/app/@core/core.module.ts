@@ -74,9 +74,9 @@ export const NB_CORE_PROVIDERS = [
         }
         ,
         refreshToken: {
-          endpoint: "/api/auth/refreshToken",
+          endpoint: '/api/auth/refreshToken',
           requireValidToken: true,
-        }
+        },
       }),
 
     ],

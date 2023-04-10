@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebSocketIO } from "../../@core/services/websocket.service"
+import { WebSocketIO } from '../../@core/services/websocket.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ws.sendMessage("message", "hola mundo");
+    this.ws.sendMessage('message', 'hola mundo');
   }
 
 }

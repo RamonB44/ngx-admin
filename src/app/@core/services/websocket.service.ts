@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+  import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { NbAuthJWTToken, NbAuthService, NbAuthResult , NbAuthRefreshableToken} from '@nebular/auth';
 
 @Injectable()
 export class WebSocketIO {
-  private socket: Socket;
+  private socket;
   private token: string;
 
 
@@ -14,12 +14,18 @@ export class WebSocketIO {
         .subscribe((token: NbAuthJWTToken) => {
 
           if (token.isValid()) {
-            this.token = token.getValue(); // here we receive a payload from the token and assigns it to our `user` variable
+            this.token = token.getValue();
+
           }
 
         });
 
     this.socket = io("http://localhost:3001", {
+      // reconnectionAttempts : 5,
+      reconnectionDelay: 20000,
+      // reconnectionDelayMax: 5000,
+      // timeout: 5000,
+      // timeout: 20000,
       reconnection: true,
       transports: ["websocket", "polling"],
       withCredentials: true,
@@ -32,6 +38,16 @@ export class WebSocketIO {
       auth: {
         token: this.token,
       },
+
+    });
+
+    this.socket.on("connect_error", () => {
+      // console.log(this.token);
+      this.authService.refreshToken("email",{ token : this.token }).toPromise().then(( NbAuthResult: NbAuthResult ) => {
+        this.socket.auth.token = NbAuthResult.getToken().toString();
+        return NbAuthResult.getToken();
+      });
+
     });
   }
   // emite un mensaje al evento

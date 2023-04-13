@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './@core/services/auth-guard.service';
 import { WebSocketIO } from './@core/services/websocket.service';
+import { ChartsModule } from 'ng2-charts';
 
 import {
   NbChatModule,
@@ -31,6 +32,7 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    ChartsModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -42,6 +44,7 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    // NgChartsModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [AuthGuard, WebSocketIO],

@@ -7,10 +7,43 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/dashboard',
     home: true,
   },
-  // {
-  //   title: 'FEATURES',
-  //   group: true,
-  // },
+  {
+    title: 'EzWeather',
+    group: true,
+    icon: 'thermometer-outline',
+  },
+  {
+    title: 'Sistema',
+    icon: 'lock-outline',
+    expanded: true,
+    children: [
+      {
+        title: 'Sensores',
+        icon: 'radio-outline'
+      },
+      {
+        title: 'Graficos',
+        icon: 'pie-chart-outline'
+      }
+    ],
+  },
+  {
+    title: 'Configuraciones',
+    group: true,
+  },
+  {
+    title: 'Parametros',
+    icon: 'options-outline',
+    children: [
+      {
+        title: 'Rango de lectura',
+        icon: 'eye-off-2-outline'
+      },
+      {
+        title: '...',
+      }
+    ],
+  },
   // {
   //   title: 'Auth',
   //   icon: 'lock-outline',

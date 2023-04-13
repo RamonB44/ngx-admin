@@ -10,7 +10,7 @@ describe('WeatherWidgetMainComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         WeatherWidgetMainComponent,
-      ]
+      ],
     })
       .compileComponents();
   }));

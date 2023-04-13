@@ -19,12 +19,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Sensores',
-        icon: 'radio-outline'
+        icon: 'radio-outline',
       },
       {
         title: 'Graficos',
-        icon: 'pie-chart-outline'
-      }
+        icon: 'pie-chart-outline',
+      },
     ],
   },
   {
@@ -37,7 +37,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Rango de lectura',
-        icon: 'eye-off-2-outline'
+        icon: 'eye-off-2-outline',
       },
       {
         title: '...',

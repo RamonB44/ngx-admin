@@ -5,7 +5,7 @@ import { Color, Label } from 'ng2-charts';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 @Component({
-  selector: 'app-line-chart',
+  selector: 'ngx-app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css'],
 })
@@ -15,7 +15,7 @@ export class LineChartComponent {
     { data: [34, 31, 28, 29, 32, 31, 30, 24], label: 'Sensor A' },
   ];
 
-  //Labels shown on the x-axis
+  // Labels shown on the x-axis
   lineChartLabels: Label[] = [
     '10:00',
     '11:00',
@@ -30,7 +30,7 @@ export class LineChartComponent {
   // Define chart options
   lineChartOptions = {
     legend: {
-      display : false,
+      display: false,
     },
     responsive: true,
     scales: {
@@ -41,11 +41,11 @@ export class LineChartComponent {
           suggestedMax: 45,
           stepSize: 1,
           type: 'logarithmic',
-        }
+        },
       }],
       xAxes: [{
         display: false,
-      }]
+      }],
     },
     annotation: {
       annotations: [{
@@ -58,10 +58,10 @@ export class LineChartComponent {
         borderColor: 'red',
         borderWidth: 1,
         label: {
-          backgroundColor: "transparent",
-          fontColor: "red",
+          backgroundColor: 'transparent',
+          fontColor: 'red',
           enabled: true,
-          content: "Minimun 20.00 C°",
+          content: 'Minimun 20.00 C°',
           yAdjust: -10,
           position: 'left',
         },
@@ -69,7 +69,7 @@ export class LineChartComponent {
         // (be sure to enable the event in the events array below).
         onClick: function (e) {
           // `this` is bound to the annotation element
-        }
+        },
       },
       {
         drawTime: 'afterDraw', // overrides annotation.drawTime if set
@@ -81,9 +81,9 @@ export class LineChartComponent {
         borderColor: 'orange',
         borderWidth: 1,
         label: {
-          backgroundColor: "transparent",
-          fontColor: "black",
-          content: "Average 30.00 C°",
+          backgroundColor: 'transparent',
+          fontColor: 'black',
+          content: 'Average 30.00 C°',
           enabled: true,
           yAdjust: -10,
           position: 'left',
@@ -92,7 +92,7 @@ export class LineChartComponent {
         // (be sure to enable the event in the events array below).
         onClick: function (e) {
           // `this` is bound to the annotation element
-        }
+        },
       },
       {
         drawTime: 'afterDraw', // overrides annotation.drawTime if set
@@ -104,9 +104,9 @@ export class LineChartComponent {
         borderColor: 'red',
         borderWidth: 1,
         label: {
-          backgroundColor: "transparent",
-          fontColor: "red",
-          content: "Maximun 40.00 C°",
+          backgroundColor: 'transparent',
+          fontColor: 'red',
+          content: 'Maximun 40.00 C°',
           enabled: true,
           yAdjust: -10,
           position: 'left',
@@ -115,9 +115,9 @@ export class LineChartComponent {
         // (be sure to enable the event in the events array below).
         onClick: function (e) {
           // `this` is bound to the annotation element
-        }
-      }]
-    }
+        },
+      }],
+    },
   };
 
   // Define colors of chart segments
@@ -126,7 +126,7 @@ export class LineChartComponent {
       // dark grey
       backgroundColor: 'transparent',
       borderColor: 'rgba(8, 8, 54)',
-    }
+    },
   ];
 
   // Set true to show legends
@@ -139,10 +139,10 @@ export class LineChartComponent {
 
   // events
   chartClicked(event): void {
-    console.log(event);
+    // console.log(event);
   }
 
   chartHovered({ event, active }: { event: MouseEvent; active: {}[] }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 }

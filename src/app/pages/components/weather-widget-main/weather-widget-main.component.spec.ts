@@ -8,7 +8,9 @@ describe('WeatherWidgetMainComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [WeatherWidgetMainComponent]
+      declarations: [
+        WeatherWidgetMainComponent,
+      ]
     })
       .compileComponents();
   }));

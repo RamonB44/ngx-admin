@@ -23,7 +23,7 @@ export class WeatherWidgetMainComponent implements OnInit {
   getWeatherData() {
     fetch('https://api.openweathermap.org/data/2.5/weather?q=mumbai&appid=ff1bc4683fc7325e9c57e586c20cc03e')
       .then(response => response.json())
-      .then(data => { this.setWeatherData(data); })
+      .then(data => { this.setWeatherData(data); });
 
     // let data = JSON.parse('{"coord":{"lon":72.85,"lat":19.01},
     // "weather":[{"id":721,"main":"Haze","description":"haze","icon":"50n"}],

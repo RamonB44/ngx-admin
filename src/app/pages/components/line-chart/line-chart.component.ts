@@ -135,7 +135,9 @@ export class LineChartComponent {
   // Define type of chart
   lineChartType = 'line';
 
-  lineChartPlugins = [ChartAnnotation]
+  lineChartPlugins = [
+    ChartAnnotation,
+  ];
 
   // events
   chartClicked(event): void {

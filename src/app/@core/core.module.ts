@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import { NbAuthJWTInterceptor, NbAuthJWTToken, NbAuthModule, NbAuthOAuth2JWTToken, NbDummyAuthStrategy, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2GrantType, NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -52,6 +52,8 @@ import { StatsProgressBarService } from './mock/stats-progress-bar.service';
 import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
 import { MockDataModule } from './mock/mock-data.module';
+import { HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
+import { getDeepFromObject } from '../../framework/auth/helpers';
 
 const socialLinks = [
   {
@@ -106,9 +108,55 @@ export const NB_CORE_PROVIDERS = [
   ...NbAuthModule.forRoot({
 
     strategies: [
-      NbDummyAuthStrategy.setup({
+      //
+      // NbOAuth2AuthStrategy.setup({
+      //   name: 'oauth2',
+      //   clientId: 'temp-client-id',
+      //   clientSecret: 's3cr3t',
+      //   clientAuthMethod: NbOAuth2ClientAuthMethod.BASIC,
+      //   baseEndpoint: 'http://localhost:3000/api/oauth/',
+      //   token: {
+      //     endpoint: 'token',
+      //     grantType: NbOAuth2GrantType.PASSWORD,
+      //     class: NbAuthOAuth2JWTToken,
+      //     requireValidToken: true,
+      //   },
+      //   redirect: {
+      //     success: '/oauth2-password',
+      //   },
+
+      // }),
+      NbPasswordAuthStrategy.setup({
         name: 'email',
-        delay: 3000,
+        baseEndpoint: 'http://localhost:3000',
+        token: {
+          class: NbAuthOAuth2JWTToken,
+          key: 'token',
+          getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
+            res.body,
+            options.token.key,
+          ),
+        },
+        login: {
+          // ...
+          endpoint: '/api/auth/login',
+          redirect: {
+            success: '/pages/dashboard',
+            failure: null, // stay on the same page
+          },
+        },
+        register: {
+          // ...
+          endpoint: '/api/auth/register',
+          redirect: {
+            success: '/pages/dashboard',
+            failure: null, // stay on the same page
+          },
+        },
+        refreshToken: {
+          endpoint: '/api/auth/refreshToken',
+          requireValidToken: true,
+        },
       }),
     ],
     forms: {
@@ -137,6 +185,11 @@ export const NB_CORE_PROVIDERS = [
 
   {
     provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: NbAuthJWTInterceptor,
+    multi: true
   },
   AnalyticsService,
   LayoutService,

@@ -30,6 +30,8 @@ import { PlayerComponent } from './rooms/player/player.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { TrafficChartComponent } from './traffic/traffic-chart.component';
 import { FormsModule } from '@angular/forms';
+import { WeatherWidgetMainComponent } from './components/weather-widget-main/weather-widget-main.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 @NgModule({
   imports: [
@@ -64,6 +66,8 @@ import { FormsModule } from '@angular/forms';
     SolarComponent,
     TrafficComponent,
     TrafficChartComponent,
+    LineChartComponent,
+    WeatherWidgetMainComponent,
   ],
 })
 export class DashboardModule { }

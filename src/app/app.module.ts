@@ -11,6 +11,7 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { WebSocketIO } from './@core/utils/websocket.service';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -20,6 +21,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { AuthGuard } from './@core/utils/auth-guard.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +43,7 @@ import {
     ThemeModule.forRoot(),
   ],
   bootstrap: [AppComponent],
+  providers: [AuthGuard,WebSocketIO]
 })
 export class AppModule {
 }

@@ -14,7 +14,7 @@ import {
   NbAuthJWTToken,
   NbAuthOAuth2Token,
 } from '@nebular/auth';
-import { getDeepFromObject as ngxGetDeepFromObject } from '../../../framework/auth/helpers';
+import { ngxGetDeepFromObject } from '../../../framework/auth/helpers';
 
 @Component({
   selector: 'nb-playground-auth',

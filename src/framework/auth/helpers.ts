@@ -116,7 +116,7 @@ function deepCloneArray(arr: any[]): any {
 }
 
 // getDeepFromObject({result: {data: 1}}, 'result.data', 2); // returns 1
-export function getDeepFromObject(object = {}, name: string, defaultValue?: any) {
+export function ngxGetDeepFromObject(object = {}, name: string, defaultValue?: any) {
   const keys = name.split('.');
   // clone the object
   let level = deepExtend({}, object || {});

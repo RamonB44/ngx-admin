@@ -14,10 +14,10 @@ import {
   NbAuthJWTToken,
   NbAuthOAuth2Token,
 } from '@nebular/auth';
-
+// import { getDeepFromObject } from '../../../framework/auth/helpers';
 
 @Component({
-  selector: 'nb-playground-auth',
+  selector: 'ngx-playground-auth',
   templateUrl: './oauth2-password-login.component.html',
   styleUrls: ['./oauth2-password-login.component.scss'],
 })
@@ -79,7 +79,7 @@ export class OAuth2PasswordLoginComponent {
   }
 
   getConfigValue(key: string): any {
-
+    // return getDeepFromObject(this.options, key, null);
   }
 
   getClaims(rawToken: string): string {

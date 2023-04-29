@@ -132,10 +132,12 @@ export const NB_CORE_PROVIDERS = [
         token: {
           class: NbAuthOAuth2JWTToken,
           key: 'token',
-          getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
-            res.body,
-            options.token.key,
-          ),
+          // getter: function (method, response) {
+          //   return {
+          //       access_token: response.body.token.access_token,
+          //       refreshToken: response.body.token.refreshToken,
+          //   };
+          // },
         },
         login: {
           // ...
@@ -155,7 +157,6 @@ export const NB_CORE_PROVIDERS = [
         },
         refreshToken: {
           endpoint: '/api/auth/refreshToken',
-          requireValidToken: true,
         },
       }),
     ],

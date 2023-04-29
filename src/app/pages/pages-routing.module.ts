@@ -11,11 +11,11 @@ const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    {
-      path: 'dashboard',
-      component: ECommerceComponent,
-      canActivate: [ AuthGuard ], // here we tell Angular to check the access with our AuthGuard
-    },
+    // {
+    //   path: 'dashboard',
+    //   component: ECommerceComponent,
+    //   canActivate: [ AuthGuard ], // here we tell Angular to check the access with our AuthGuard
+    // },
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
@@ -46,11 +46,11 @@ const routes: Routes = [{
     //   loadChildren: () => import('./extra-components/extra-components.module')
     //     .then(m => m.ExtraComponentsModule),
     // },
-    // {
-    //   path: 'maps',
-    //   loadChildren: () => import('./maps/maps.module')
-    //     .then(m => m.MapsModule),
-    // },
+    {
+      path: 'maps',
+      loadChildren: () => import('./maps/maps.module')
+        .then(m => m.MapsModule),
+    },
     // {
     //   path: 'charts',
     //   loadChildren: () => import('./charts/charts.module')
@@ -73,7 +73,7 @@ const routes: Routes = [{
     // },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'iot-dashboard',
       pathMatch: 'full',
     },
     {

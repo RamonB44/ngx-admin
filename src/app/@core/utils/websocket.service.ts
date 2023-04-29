@@ -1,33 +1,32 @@
 import { Injectable } from '@angular/core';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { Observable } from 'rxjs';
-import { NbAuthJWTToken, NbAuthService, NbAuthResult, NbAuthRefreshableToken } from '@nebular/auth';
-
+import { NbAuthService, NbAuthResult, NbAuthOAuth2Token , NbAuthOAuth2JWTToken, NbTokenService, NbAuthToken} from '@nebular/auth';
+// import { tap } from 'rxjs/operators';
 @Injectable()
 export class WebSocketIO {
   private socket;
-  private token: string;
+  private token;
 
 
   constructor(private authService: NbAuthService) {
     this.authService.onTokenChange()
-      .subscribe((token: NbAuthJWTToken) => {
+      .subscribe((token: NbAuthOAuth2JWTToken) => {
 
         if (token.isValid()) {
-          this.token = token.getValue();
-
+          this.token = token.getPayload()
         }
-
       });
 
     this.socket = io('http://localhost:3001', {
       // reconnectionAttempts : 5,
-      reconnectionDelay: 20000,
+      // reconnectionDelay: 20000,
       // reconnectionDelayMax: 5000,
       // timeout: 5000,
       // timeout: 20000,
+      autoConnect: true,
       reconnection: true,
-      transports: ['websocket', 'polling'],
+      transports: ['websocket'],
       withCredentials: true,
       extraHeaders: {
         'Access-Control-Allow-Origin': 'http://localhost:4200',
@@ -36,16 +35,32 @@ export class WebSocketIO {
         // add any other headers you need to sendS
       },
       auth: {
-        token: this.token,
+        token: this.token.refreshToken,
       },
 
     });
 
-    this.socket.on('connect_error', () => {
-      this.authService.refreshToken('email', { token: this.token }).toPromise().then((result: NbAuthResult) => {
-        this.socket.auth.token = result.getToken().toString();
-        return result.getToken();
-      });
+    this.socket.on('connect_error', (err) => {
+      console.log(err.message); // prints the message associated with the error
+      // this.authService.refreshToken('email', { token: {
+      //   access_token : this.token,
+      //   refreshToken : this.refreshToken,
+      // } }).toPromise().then((result: NbAuthResult) => {
+      //   this.socket.auth.token = result.getToken().toString();
+      //   return result.getToken();
+      // });
+
+      // this.authService.isAuthenticatedOrRefresh().toPromise().then((authenticated: Boolean) => {
+      //   if (!authenticated) { // false
+      //     // Si no se recupera la conexion se cierra el socket
+      //     console.log("Unauthenticated")
+      //     return;
+      //   }else{
+      //     console.log("Authenticated")
+      //     return;
+      //   }
+
+      // })
     });
   }
   // emite un mensaje al evento

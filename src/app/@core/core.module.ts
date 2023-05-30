@@ -54,6 +54,7 @@ import { SecurityCamerasService } from './mock/security-cameras.service';
 import { MockDataModule } from './mock/mock-data.module';
 import { HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
 import { getDeepFromObject } from '../../framework/auth/helpers';
+import { NbCookieInterceptor } from "./utils/http-injector.service";
 
 const socialLinks = [
   {
@@ -108,55 +109,38 @@ export const NB_CORE_PROVIDERS = [
   ...NbAuthModule.forRoot({
 
     strategies: [
-      //
-      // NbOAuth2AuthStrategy.setup({
-      //   name: 'oauth2',
-      //   clientId: 'temp-client-id',
-      //   clientSecret: 's3cr3t',
-      //   clientAuthMethod: NbOAuth2ClientAuthMethod.BASIC,
-      //   baseEndpoint: 'http://localhost:3000/api/oauth/',
-      //   token: {
-      //     endpoint: 'token',
-      //     grantType: NbOAuth2GrantType.PASSWORD,
-      //     class: NbAuthOAuth2JWTToken,
-      //     requireValidToken: true,
-      //   },
-      //   redirect: {
-      //     success: '/oauth2-password',
-      //   },
-
-      // }),
       NbPasswordAuthStrategy.setup({
         name: 'email',
-        baseEndpoint: 'http://localhost:3000',
-        token: {
-          class: NbAuthOAuth2JWTToken,
-          key: 'token',
-          // getter: function (method, response) {
-          //   return {
-          //       access_token: response.body.token.access_token,
-          //       refreshToken: response.body.token.refreshToken,
-          //   };
-          // },
-        },
+        baseEndpoint: 'http://localhost:3000/api/auth/',
         login: {
           // ...
-          endpoint: '/api/auth/login',
+          endpoint: 'login',
+          requireValidToken: false,
           redirect: {
             success: '/pages/dashboard',
             failure: null, // stay on the same page
           },
         },
+        logout: {
+          endpoint: 'logout',
+          method: 'delete',
+          redirect: {
+            success: '/login',
+            failure: null,
+          },
+        },
         register: {
           // ...
-          endpoint: '/api/auth/register',
+          endpoint: 'register',
+          requireValidToken: false,
           redirect: {
             success: '/pages/dashboard',
             failure: null, // stay on the same page
           },
         },
         refreshToken: {
-          endpoint: '/api/auth/refreshToken',
+          endpoint: 'refreshToken',
+          requireValidToken: false,
         },
       }),
     ],
@@ -189,7 +173,7 @@ export const NB_CORE_PROVIDERS = [
   },
   {
     provide: HTTP_INTERCEPTORS,
-    useClass: NbAuthJWTInterceptor,
+    useClass: NbCookieInterceptor,
     multi: true
   },
   AnalyticsService,

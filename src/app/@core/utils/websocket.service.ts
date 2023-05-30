@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 import { Observable } from 'rxjs';
-import { NbAuthService, NbAuthResult, NbAuthOAuth2Token , NbAuthOAuth2JWTToken, NbTokenService, NbAuthToken} from '@nebular/auth';
+import { NbAuthService, NbAuthOAuth2JWTToken} from '@nebular/auth';
 // import { tap } from 'rxjs/operators';
 @Injectable()
 export class WebSocketIO {

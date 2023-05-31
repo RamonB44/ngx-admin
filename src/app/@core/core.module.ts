@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthJWTInterceptor, NbAuthJWTToken, NbAuthModule, NbAuthOAuth2JWTToken, NbDummyAuthStrategy, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2GrantType, NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions } from '@nebular/auth';
+import { NbAuthJWTInterceptor, NbAuthJWTToken, NbAuthModule, NbAuthOAuth2JWTToken, NbAuthSimpleToken, NbDummyAuthStrategy, NbOAuth2AuthStrategy, NbOAuth2ClientAuthMethod, NbOAuth2GrantType, NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -112,10 +112,18 @@ export const NB_CORE_PROVIDERS = [
       NbPasswordAuthStrategy.setup({
         name: 'email',
         baseEndpoint: 'http://localhost:3000/api/auth/',
+        token: {
+          class: NbAuthOAuth2JWTToken,
+          key: 'token',
+          getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => getDeepFromObject(
+            res.body,
+            options.token.key,
+          ),
+        },
         login: {
           // ...
           endpoint: 'login',
-          requireValidToken: false,
+          // requireValidToken: true,
           redirect: {
             success: '/pages/dashboard',
             failure: null, // stay on the same page
@@ -132,7 +140,7 @@ export const NB_CORE_PROVIDERS = [
         register: {
           // ...
           endpoint: 'register',
-          requireValidToken: false,
+          // requireValidToken: false,
           redirect: {
             success: '/pages/dashboard',
             failure: null, // stay on the same page
@@ -140,7 +148,7 @@ export const NB_CORE_PROVIDERS = [
         },
         refreshToken: {
           endpoint: 'refreshToken',
-          requireValidToken: false,
+          // requireValidToken: false,
         },
       }),
     ],

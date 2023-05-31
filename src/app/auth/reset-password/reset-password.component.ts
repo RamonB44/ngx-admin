@@ -10,7 +10,11 @@ export class NgxResetPasswordComponent extends NbResetPasswordComponent implemen
   // no constructor
 
   ngOnInit() {
-
+    this.service.onTokenChange().subscribe((token: NbAuthJWTToken) => {
+      if (token.isValid()) {
+        this.router.navigate(['pages/dashboard']); // Your redirection goes here
+      }
+    });
   }
 
 }

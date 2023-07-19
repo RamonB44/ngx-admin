@@ -15,8 +15,8 @@ export const routes: Routes = [
     path: 'oauth',
     loadChildren: () => import('./oauth/oauth2-password.module').then(m => m.OAuth2PasswordPlaygroundModule),
   },
-  { path: '', redirectTo: 'pages.iot-dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages.iot-dashboard' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' },
 ];
 
 const config: ExtraOptions = {
